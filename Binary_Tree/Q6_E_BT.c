@@ -16,7 +16,7 @@ typedef struct _btnode
     int item;
     struct _btnode *left;
     struct _btnode *right;
-} BTNode;   // You should not change the definition of BTNode
+} BTNode; // You should not change the definition of BTNode
 
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -31,7 +31,6 @@ typedef struct _stack
     StackNode *top;
 } Stack;
 
-
 ///////////////////////// Function prototypes ////////////////////////////////////
 
 // You should not change the prototypes of these functions
@@ -40,8 +39,8 @@ void printSmallerValues(BTNode *node, int m);
 BTNode *createBTNode(int item);
 
 BTNode *createTree();
-void push( Stack *stack, BTNode *node);
-BTNode* pop(Stack *stack);
+void push(Stack *stack, BTNode *node);
+BTNode *pop(Stack *stack);
 
 void printTree(BTNode *node);
 void removeAll(BTNode **node);
@@ -57,17 +56,16 @@ int main()
     c = 1;
     root = NULL;
 
-
     printf("1: Create a binary tree.\n");
     printf("2: Print smaller values.\n");
     printf("0: Quit;\n");
 
-    while(c != 0)
+    while (c != 0)
     {
         printf("Please input your choice(1/2/0): ");
-        if( scanf("%d",&c) > 0)
+        if (scanf("%d", &c) > 0)
         {
-            switch(c)
+            switch (c)
             {
             case 1:
                 removeAll(&root);
@@ -78,9 +76,9 @@ int main()
                 break;
             case 2:
                 printf("Enter an integer value to print smaller values: ");
-                scanf("%d",&value);
+                scanf("%d", &value);
                 printf("The values smaller than %d are: ", value);
-                printSmallerValues(root,value);
+                printSmallerValues(root, value);
                 printf("\n");
                 removeAll(&root);
                 break;
@@ -93,10 +91,10 @@ int main()
             }
         }
         else
-        {printf("\n");
-            scanf("%c",&e);
+        {
+            printf("\n");
+            scanf("%c", &e);
         }
-
     }
     return 0;
 }
@@ -105,7 +103,24 @@ int main()
 
 void printSmallerValues(BTNode *node, int m)
 {
-	/* add your code here */
+    if (node == NULL)
+    {
+        // 현재 노드가 NULL이면, 더 이상 진행할 수 없으므로 반환
+        return;
+    }
+
+    // 현재 노드의 값이 m보다 작은지 확인
+    if (node->item < m)
+    {
+        // 값이 m보다 작다면 출력
+        printf("%d ", node->item);
+    }
+
+    // 왼쪽 자식 노드에 대해 재귀 호출
+    printSmallerValues(node->left, m);
+
+    // 오른쪽 자식 노드에 대해 재귀 호출
+    printSmallerValues(node->right, m);
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -121,7 +136,6 @@ BTNode *createBTNode(int item)
 
 //////////////////////////////////////////////////////////////////////////////////
 
-
 BTNode *createTree()
 {
     Stack stack;
@@ -133,57 +147,57 @@ BTNode *createTree()
     root = NULL;
     printf("Input an integer that you want to add to the binary tree. Any Alpha value will be treated as NULL.\n");
     printf("Enter an integer value for the root: ");
-    if(scanf("%d",&item) > 0)
+    if (scanf("%d", &item) > 0)
     {
         root = createBTNode(item);
-        push(&stack,root);
+        push(&stack, root);
     }
     else
     {
-        scanf("%c",&s);
+        scanf("%c", &s);
     }
 
-    while((temp =pop(&stack)) != NULL)
+    while ((temp = pop(&stack)) != NULL)
     {
 
         printf("Enter an integer value for the Left child of %d: ", temp->item);
 
-        if(scanf("%d",&item)> 0)
+        if (scanf("%d", &item) > 0)
         {
             temp->left = createBTNode(item);
         }
         else
         {
-            scanf("%c",&s);
+            scanf("%c", &s);
         }
 
         printf("Enter an integer value for the Right child of %d: ", temp->item);
-        if(scanf("%d",&item)>0)
+        if (scanf("%d", &item) > 0)
         {
             temp->right = createBTNode(item);
         }
         else
         {
-            scanf("%c",&s);
+            scanf("%c", &s);
         }
 
-        if(temp->right != NULL)
-            push(&stack,temp->right);
-        if(temp->left != NULL)
-            push(&stack,temp->left);
+        if (temp->right != NULL)
+            push(&stack, temp->right);
+        if (temp->left != NULL)
+            push(&stack, temp->left);
     }
     return root;
 }
 
-void push( Stack *stack, BTNode *node)
+void push(Stack *stack, BTNode *node)
 {
     StackNode *temp;
 
     temp = malloc(sizeof(StackNode));
-    if(temp == NULL)
+    if (temp == NULL)
         return;
     temp->btnode = node;
-    if(stack->top == NULL)
+    if (stack->top == NULL)
     {
         stack->top = temp;
         temp->next = NULL;
@@ -195,14 +209,14 @@ void push( Stack *stack, BTNode *node)
     }
 }
 
-BTNode* pop(Stack *stack)
+BTNode *pop(Stack *stack)
 {
     StackNode *temp, *top;
     BTNode *ptr;
     ptr = NULL;
 
     top = stack->top;
-    if(top != NULL)
+    if (top != NULL)
     {
         temp = top->next;
         ptr = top->btnode;
@@ -216,16 +230,17 @@ BTNode* pop(Stack *stack)
 
 void printTree(BTNode *node)
 {
-    if(node == NULL) return;
+    if (node == NULL)
+        return;
 
     printTree(node->left);
-    printf("%d ",node->item);
+    printf("%d ", node->item);
     printTree(node->right);
 }
 
 void removeAll(BTNode **node)
 {
-    if(*node != NULL)
+    if (*node != NULL)
     {
         removeAll(&((*node)->left));
         removeAll(&((*node)->right));
@@ -233,4 +248,3 @@ void removeAll(BTNode **node)
         *node = NULL;
     }
 }
-

@@ -100,7 +100,9 @@ int insertSortedLL(LinkedList *ll, int item)
 	}
 
 	// insertNode 함수를 이용하여 노드 삽입
-	return insertNode(ll, index, item);
+	insertNode(ll, index, item);
+
+	return index;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

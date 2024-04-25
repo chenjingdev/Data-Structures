@@ -135,11 +135,6 @@ int isStackPairwiseConsecutive(Stack *s)
 		push(&tempStack, first);
 	}
 
-	while (!isEmptyStack(&tempStack))
-	{
-		push(s, pop(&tempStack));
-	}
-
 	return isConsecutive;
 }
 

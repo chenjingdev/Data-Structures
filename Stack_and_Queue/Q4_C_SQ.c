@@ -121,9 +121,14 @@ void reverse(Queue *q)
 	s.ll.size = 0;
 	s.ll.tail = NULL;
 
-	while (!isEmptyQueue)
+	while (!isEmptyQueue(q))
 	{
-		push
+		push(&s, dequeue(q));
+	}
+
+	while (!isEmptyStack(&s))
+	{
+		enqueue(q, pop(&s));
 	}
 }
 
